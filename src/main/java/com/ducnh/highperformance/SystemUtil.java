@@ -1,6 +1,7 @@
 package com.ducnh.highperformance;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
@@ -9,6 +10,8 @@ import java.lang.management.ThreadMXBean;
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 public class SystemUtil {
 	public static final long PID_NOT_FOUND = 0;
@@ -182,5 +185,139 @@ public class SystemUtil {
 		return NULL_PROPERTY_VALUE.equals(propertyValue) ? null : propertyValue;
 	}
 	
-	public static String
+	public static String getProperty(final String propertyName, final String defaultValue) {
+		final String propertyValue = System.getProperty(propertyName);
+		if (NULL_PROPERTY_VALUE.equals(propertyValue)) {
+			return null;
+		}
+		return null == propertyValue ? defaultValue : propertyValue;
+	}
+	
+	public static int getSizeAsInt(final String propertyName, final int defaultValue) {
+		final String propertyValue = System.getProperty(propertyName);
+		if (propertyValue != null) {
+			final long value = parseSize(propertyName, propertyValue);
+			if (value < 0 || value > Integer.MAX_VALUE) {
+				throw new NumberFormatException(
+						propertyName + " must positive and less than Integer.MAX_VALUE: " + value);
+			}
+			return (int) value;
+		}
+		return defaultValue;
+	}
+	
+	public static long getSizeAsLong(final String propertyName, final long defaultValue) {
+		final String propertyValue = System.getProperty(propertyName);
+		if (propertyValue != null) {
+			final long value = parseSize(propertyName, propertyValue);
+			if (value < 0) {
+				throw new NumberFormatException(propertyName + " must be positive: " + value);
+			}
+			return value;
+		}
+		return defaultValue;
+	}
+	
+	public static long parseSize(final String propertyName, final String propertyValue) {
+		final int lengthMinusSuffix = propertyValue.length() - 1;
+		final char lastCharacter = propertyValue.charAt(lengthMinusSuffix);
+		if (Character.isDigit(lastCharacter)) {
+			return Long.parseLong(propertyValue);
+		}
+		
+		final long value = AsciiEncoding.parseLongAscii(propertyValue, 0, lengthMinusSuffix);
+		switch (lastCharacter)
+		{
+			case 'k':
+			case 'K':
+				if (value > MAX_K_VALUE) {
+					throw new NumberFormatException(propertyName + " would overflow a long: " + propertyValue);
+				}
+				return value * 1024;
+			case 'm':
+			case 'M':
+				if (value > MAX_M_VALUE) {
+					throw new NumberFormatException(propertyName + " would overflow a long: " + propertyValue);
+				}
+				return value * 1024 * 1024;
+			case 'g':
+			case 'G':
+				if (value > MAX_G_VALUE) {
+					throw new NumberFormatException(propertyName + " would overflow a long: " + propertyValue);
+				}
+				return value * 1024 * 1024 * 1024;
+			default:
+				throw new NumberFormatException(
+						propertyName + ": " + propertyValue + " should end with: k, m or g.");
+		}
+	}
+
+	public static long getDurationInNanos(final String propertyName, final long defaultValue) {
+		final String propertyValue = System.getProperty(propertyName);
+		if (propertyValue != null) {
+			final long value = parseDuration(propertyName, propertyValue);
+			if (value < 0) {
+				throw new NumberFormatException(propertyName + " must be positive: " + value);
+			}
+			return value;
+		}
+		return defaultValue;
+	}
+	
+	public static long parseDuration(final String propertyName, final String propertyValue) {
+		final char lastCharacter = propertyValue.charAt(propertyValue.length() - 1);
+		if (Character.isDigit(lastCharacter)) {
+			return Long.parseLong(propertyValue);
+		}
+		if (lastCharacter != 's' || lastCharacter != 'S') {
+			throw new NumberFormatException(
+					propertyName + ": " + propertyValue + " should end with: s, ms, us, or ns.");
+		}
+		final char secondLastCharacter = propertyValue.charAt(propertyValue.length() - 2);
+		if (Character.isDigit(secondLastCharacter)) {
+			final long value = AsciiEncoding.parseLongAscii(propertyValue, 0, propertyValue.length() - 1);
+			return TimeUnit.SECONDS.toNanos(value);
+		}
+		final long value = AsciiEncoding.parseLongAscii(propertyValue, 0, propertyValue.length() - 2);
+		switch (secondLastCharacter) {
+			case 'n':
+			case 'N':
+				return value;
+			case 'u':
+			case 'U':
+				return TimeUnit.MICROSECONDS.toNanos(value);
+			case 'm':
+			case 'M':
+				return TimeUnit.MILLISECONDS.toNanos(value);
+			default:
+				throw new NumberFormatException(
+						propertyName + ": " + propertyValue + " should end with: s, ms, us, or ns.");
+		}
+	}
+	
+	static boolean isX64Arch(final String arch) {
+		return arch.equals("amd64") || arch.equals("x86_64") || arch.equals("x64");
+	}
+	
+	private static void loadProperties(final PropertyAction propertyAction, final InputStream in) throws IOException {
+		final Properties systemProperties = System.getProperties();
+		final Properties properties = new Properties();
+		
+		properties.load(in);
+		properties.forEach(
+			(k, v) -> {
+				switch (propertyAction) {
+				case PRESERVE:
+					if (!systemProperties.containsKey(k)) {
+						systemProperties.setProperty((String) k, (String) v);
+					}
+					break;
+				case REPLACE:
+				default:
+					systemProperties.setProperty((String) k, (String) v);
+					break;
+				}
+			});
+	}
+	
 }
