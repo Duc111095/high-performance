@@ -99,7 +99,7 @@ public class SystemUtil {
 	/**
 	 * The system property for <code>java.io.tmpdir</code> and ensuring a {@link File#separator} is at the end.
 	 * 
-	 * @return temp directory for the runtime.
+	 * @return temporary directory for the runtime.
 	 */
 	public static String tmpDirName() {
 		String tmpDirName = System.getProperty("java.io.tmpdir");
