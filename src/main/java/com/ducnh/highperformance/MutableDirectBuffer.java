@@ -1,5 +1,6 @@
 package com.ducnh.highperformance;
 
+import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 public interface MutableDirectBuffer extends DirectBuffer{
@@ -25,5 +26,21 @@ public interface MutableDirectBuffer extends DirectBuffer{
 	void putChar(int index, char value);
 	void putByte(int index, byte value);
 	void putBytes(int index, byte[] src);
-	void put
+	void putBytes(int index, byte[] src, int offset, int length);
+	void putBytes(int index, ByteBuffer srcBuffer, int length);
+	void putBytes(int index, ByteBuffer srcBuffer, int srcIndex, int length);
+	void putBytes(int index, DirectBuffer srcBuffer, int srcIndex, int length);
+	int putStringAscii(int index, String value);
+	int putStringAscii(int index, CharSequence value);
+	int putStringAscii(int index, String value, ByteOrder byteOrder);
+	int putStringAscii(int index, CharSequence value, ByteOrder byteOrder);
+	int putStringWithoutLengthAscii(int index, String value);
+	int putStringWithoutLengthAscii(int index, CharSequence value);
+	int putStringWithoutLengthAscii(int index, String value, int valueOffset, int length);
+	int putStringWithoutLengthAscii(int index, CharSequence value, int valueOffset, int length);
+	int putStringUtf8(int index, String value);
+	int putStringUtf8(int index, String value, ByteOrder byteOrder);
+	int putStringUtf8(int index, String value, int maxEncodedLength);
+	int putStringUtf8(int index, String value, ByteOrder byteOrder, int maxEncodedLength);
+	int putStringWithoutLengthUtf8(int index, String value);
 }

@@ -13,7 +13,7 @@ public interface DirectBuffer {
 	int STR_HEADER_LEN = SIZE_OF_INT;
 	String DISABLE_ARRAY_CONTENT_PRINTOUT_PROP_NAME = "com.ducnh.array.printout";
 	String DISABLE_BOUNDS_CHECKS_PROP_NAME = "com.ducnh.bounds.checks";
-	boolean SHOULD_BOUNDS_CHECKS = !"true".equals(DISABLE_ARRAY_CONTENT_PRINTOUT_PROP_NAME);
+	boolean SHOULD_BOUNDS_CHECK = !"true".equals(DISABLE_ARRAY_CONTENT_PRINTOUT_PROP_NAME);
 	void wrap(byte[] buffer);
 	void wrap(byte[] buffer, int offset, int length);
 	void wrap(ByteBuffer buffer);
