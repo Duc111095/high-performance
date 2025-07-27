@@ -388,6 +388,18 @@ public abstract class AbstractMutableDirectBuffer implements MutableDirectBuffer
 		return getStringWithoutLengthAscii(index + STR_HEADER_LEN, length);
 	}
 	
+	public int getStringAscii(final int index, final Appendable appendable) {
+		if (SHOULD_BOUNDS_CHECK) {
+			boundsCheck0(index, STR_HEADER_LEN);
+		}
+		
+		final int length = UnsafeApi.getInt(byteArray, addressOffset + index);
+		if (length == 0) {
+			return 0;
+		}
+		return getStringWithoutLengthAscii(index + STR_HEADER_LEN, length, appendable);
+	}
+	
 	public String getStringAscii(final int index, final ByteOrder byteOrder) {
 		if (SHOULD_BOUNDS_CHECK) {
 			boundsCheck0(index, STR_HEADER_LEN);

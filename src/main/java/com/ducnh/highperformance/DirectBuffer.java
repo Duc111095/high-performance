@@ -43,7 +43,7 @@ public interface DirectBuffer {
 	char getChar(int index, ByteOrder byteOrder);
 	char getChar(int index);
 	byte getByte(int index);
-	void getByte(int index, byte[] dst);
+	void getBytes(int index, byte[] dst);
 	void getBytes(int index, byte[] dst, int offset, int length);
 	void getBytes(int index, MutableDirectBuffer dstBuffer, int dstIndex, int length);
 	void getBytes(int index, ByteBuffer dstBuffer, int length);
