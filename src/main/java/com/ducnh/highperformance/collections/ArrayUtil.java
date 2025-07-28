@@ -15,6 +15,7 @@ public final class ArrayUtil {
 	public static final double[] EMPTY_DOUBLE_ARRAY = new double[0];
 	public static final Object[] EMPTY_OBJECT_ARRAY = new Object[0];
 	public static final String[] EMPTY_STRING_ARRAY = new String[0];
+	public static final int MAX_CAPACITY = Integer.MAX_VALUE - 8;
 	
 	private ArrayUtil() {}
 	
