@@ -141,15 +141,16 @@ public final class AsciiEncoding {
 			throw new AsciiNumberFormatException("empty string: index=" + index + " length=" + length);
 		}
 		final boolean negative = MINUS_SIGN == cs.charAt(index);
+		int end;
 		int i = index;
 		if (negative) {
 			i++;
 			if (length == 1) {
 				throwParseLongError(cs, index, length);
 			}
-			final int end = index + length;
+			end = index + length;
 		}
-		final int end = index + length;
+		end = index + length;
 		if (end - i < LONG_MAX_DIGITS) {
 			final long tally = parsePositiveLongAscii(cs, index, length, i, end);
 			return negative ? -tally : tally;

@@ -392,7 +392,7 @@ public class IntArrayList extends AbstractList<Integer> implements List<Integer>
 			final int[] thatElements = that.elements;
 			for (int i = 0; i < size; i++) {
 				final int thisValue = elements[i];
-				final int thatValue = elements[i];
+				final int thatValue = thatElements[i];
 				
 				if (thisValue != thatValue) {
 					if (thisValue != this.nullValue || thatValue != that.nullValue) {
