@@ -40,7 +40,7 @@ public class Int2IntHashMap implements Map<Integer, Integer>{
 	public Int2IntHashMap(final int initialCapacity, 
 			final float loadFactor,
 			final int missingValue) {
-		this(initialCapcity, loadFactor, missingValue, true);
+		this(initialCapacity, loadFactor, missingValue, true);
 	}
 	
 	public Int2IntHashMap(
@@ -246,6 +246,13 @@ public class Int2IntHashMap implements Map<Integer, Integer>{
 		return found;
 	}
 	
+	public void clear() {
+		if (size > 0) {
+			Arrays.fill(entries, missingValue);
+			size = 0;
+		}
+	} 
+	
 	public void compact() {
 		final int idealCapacity = (int) Math.round(size() * (1.0d / loadFactor));
 		rehash(findNextPositivePowerOfTwo(Math.max(MIN_CAPACITY, idealCapacity)));
@@ -379,7 +386,7 @@ public class Int2IntHashMap implements Map<Integer, Integer>{
 		return replace((int)key, (int)oldValue, (int)newValue);
 	}
 	
-	public void replaceAll(final BiFunction<? super Integer, ? super Integer, ? super Integer> function) {
+	public void replaceAll(final BiFunction<? super Integer, ? super Integer, ? extends Integer> function) {
 		replaceAllInt(function::apply);
 	}
 	
