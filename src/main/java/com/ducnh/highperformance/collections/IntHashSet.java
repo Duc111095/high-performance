@@ -1,8 +1,5 @@
 package com.ducnh.highperformance.collections;
 
-import static com.ducnh.highperformance.BitUtil.findNextPositivePowerOfTwo;
-import static com.ducnh.highperformance.collections.CollectionUtil.validateLoadFactor;
-
 import java.lang.reflect.Array;
 import java.util.AbstractSet;
 import java.util.Arrays;
@@ -10,10 +7,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.function.IntConsumer;
 import java.util.function.IntPredicate;
 import java.util.function.Predicate;
 
-import com.ducnh.highperformance.collections.IntArrayQueue.IntIterator;
+import static com.ducnh.highperformance.BitUtil.findNextPositivePowerOfTwo;
+import static com.ducnh.highperformance.collections.CollectionUtil.validateLoadFactor;
 
 public class IntHashSet extends AbstractSet<Integer>{
 	
@@ -443,6 +442,7 @@ public class IntHashSet extends AbstractSet<Integer>{
 		return sb.toString();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public <T> T[] toArray(final T[] a) {
 		final Class<?> componentType = a.getClass().getComponentType();
 		if (!componentType.isAssignableFrom(Integer.class)) {
