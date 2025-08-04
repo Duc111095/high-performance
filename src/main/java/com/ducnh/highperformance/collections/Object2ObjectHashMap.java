@@ -110,7 +110,7 @@ public class Object2ObjectHashMap<K, V> implements Map<K, V> {
 		
 		Object oldValue;
 		
-		while(null != (oldValue = entries[keyIndex + 1]) {
+		while(null != (oldValue = entries[keyIndex + 1])) {
 			if (Objects.equals(entries[keyIndex], key)) {
 				break;
 			}

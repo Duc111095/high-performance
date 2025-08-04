@@ -53,6 +53,10 @@ public class Int2ObjectCache<V> implements Map<Integer, V> {
 		this.setSize = setSize;
 		this.setSizeShift = Integer.numberOfTrailingZeros(setSize);
 		capacity = numSets << setSizeShift;
+		mask = numSets - 1;
+		
+		keys = new int[capacity];
+		values = new Object[capacity];
 		this.evictionConsumer = evictionConsumer;
 	}
 	
@@ -345,7 +349,7 @@ public class Int2ObjectCache<V> implements Map<Integer, V> {
 			} 
 			
 			if (key == keys[i]) {
-				shuffle(i, nextSetIndex - 1);
+				shuffleUp(i, nextSetIndex - 1);
 				--size;
 				
 				evictionConsumer.accept((V) value);
@@ -597,11 +601,13 @@ public class Int2ObjectCache<V> implements Map<Integer, V> {
 		}
 		
 		public ValueIterator iterator() {
-			return iterator.reset();
+			iterator.reset();
+			
+			return iterator;
 		}
 		
 		public void clear() {
-			Int2ObjectClear.this.clear();
+			Int2ObjectCache.this.clear();
 		}
 		
 		public boolean remove(final Object o) {
