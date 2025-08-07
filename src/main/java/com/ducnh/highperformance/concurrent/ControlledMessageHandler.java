@@ -1,5 +1,7 @@
 package com.ducnh.highperformance.concurrent;
 
+import com.ducnh.highperformance.MutableDirectBuffer;
+
 @FunctionalInterface
 public interface ControlledMessageHandler {
 	enum Action {
