@@ -1,6 +1,6 @@
 package com.ducnh.highperformance.concurrent;
 
 @FunctionalInterface
-public interface EpockMicroClock {
+public interface EpochMicroClock {
 	long microTime();
 }

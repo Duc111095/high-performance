@@ -1,6 +1,6 @@
 package com.ducnh.highperformance.concurrent;
 
 @FunctionalInterface
-public interface EpockClock {
+public interface EpochClock {
 	long time();
 }

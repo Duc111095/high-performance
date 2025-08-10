@@ -1,6 +1,6 @@
 package com.ducnh.highperformance.concurrent;
 
 @FunctionalInterface
-public interface EpockNanoClock {
+public interface EpochNanoClock {
 	long nanoTime();
 }
