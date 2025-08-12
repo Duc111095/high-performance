@@ -44,4 +44,8 @@ public class SleepingIdleStrategy implements IdleStrategy{
 				", sleepPeriodNs=" + sleepPeriodNs + 
 				'}';
 	}
+
+	public void idle() {
+		LockSupport.parkNanos(sleepPeriodNs);
+	}
 }
