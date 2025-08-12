@@ -1,6 +1,9 @@
 package com.ducnh.highperformance;
 
 import static com.ducnh.highperformance.BitUtil.SIZE_OF_LONG;
+
+import com.ducnh.highperformance.concurrent.UnsafeBuffer;
+
 import static com.ducnh.highperformance.BitUtil.SIZE_OF_INT;
 
 public class ExpandableRingBuffer {
@@ -25,4 +28,5 @@ public class ExpandableRingBuffer {
 	private long head;
 	private long tail;
 	private final UnsafeBuffer buffer = new UnsafeBuffer();
+	
 }
