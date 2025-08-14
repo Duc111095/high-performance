@@ -5,5 +5,5 @@ public class AtomicCounter implements AutoCloseable{
 	private final int id;
 	private final long addressOffset;
 	private final byte[] byteArray;
-	private CountersManager countersManagers;
+	private CountersManager counterManager;
 }
