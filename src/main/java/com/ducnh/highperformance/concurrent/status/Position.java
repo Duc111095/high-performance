@@ -4,7 +4,6 @@ public abstract class Position extends ReadablePosition {
 	public Position() {
 		
 	}
-	
 	public abstract boolean isClosed();
 	public abstract void setVolatile(long value);
 	public abstract void setOrdered(long value);
