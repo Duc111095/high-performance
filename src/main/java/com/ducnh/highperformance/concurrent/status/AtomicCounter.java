@@ -10,7 +10,6 @@ import com.ducnh.highperformance.concurrent.AtomicBuffer;
 
 import static com.ducnh.highperformance.BitUtil.*;
 
-
 public class AtomicCounter implements AutoCloseable{
 	private boolean isClosed = false;
 	private final int id;

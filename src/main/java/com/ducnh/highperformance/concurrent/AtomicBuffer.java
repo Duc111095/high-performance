@@ -38,6 +38,7 @@ public interface AtomicBuffer extends MutableDirectBuffer{
 	int addIntOpaque(int index, int increment);
 	int compareAndExchangeInt(int index, int expectedValue, int updatedValue);
 	int getAndSetInt(int index, int value);
+	void getAndAddInt(int index, int value);
 	short getShortVolatile(int index);
 	void putShortVolatile(int index, short value);
 	char getCharVolatile(int index);
