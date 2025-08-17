@@ -5,4 +5,11 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>highperformance</name>
   <description>A High Performance Java Project</description>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.ducnh</groupId>
+  		<artifactId>dependency-injection</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
 </project>
