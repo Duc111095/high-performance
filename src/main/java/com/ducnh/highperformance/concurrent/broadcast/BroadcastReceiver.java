@@ -1,7 +1,5 @@
 package com.ducnh.highperformance.concurrent.broadcast;
 
-import static com.ducnh.highperformance.
-
 import static com.ducnh.highperformance.BitUtil.align;
 import static com.ducnh.highperformance.concurrent.broadcast.BroadcastBufferDescriptor.*;
 import static com.ducnh.highperformance.concurrent.broadcast.RecordDescriptor.*;
