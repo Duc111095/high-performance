@@ -113,7 +113,7 @@ public class ManyToOneRingBuffer implements RingBuffer{
 		final int headPositionIndex = this.headPositionIndex;
 		final long head = buffer.getLong(headPositionIndex);
 		
-		final int cacacity = this.capacity;
+		final int capacity = this.capacity;
 		final int headIndex = (int) head & (capacity - 1);
 		final int maxBlockLength = capacity - headIndex;
 		int bytesRead = 0;
