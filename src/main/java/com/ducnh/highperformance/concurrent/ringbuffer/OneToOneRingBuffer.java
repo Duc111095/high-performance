@@ -121,7 +121,7 @@ public final class OneToOneRingBuffer implements RingBuffer {
 		final int contiguounsBlockLength = capacity - headIndex;
 		
 		try {
-			while ((bytesRead < contiguounsBlockLength) && (messagesRead < messageCountLimt)) {
+			while ((bytesRead < contiguounsBlockLength) && (messagesRead < messageCountLimit)) {
 				final int recordIndex = headIndex + bytesRead;
 				final int recordLength = buffer.getIntVolatile(lengthOffset(recordIndex));
 				
